@@ -14,15 +14,15 @@
 
 class DLList {
 
-    struct node* head;
-    struct node* tail;
-
     struct node
     {
         node* previous;
         node* next;
         int data;
     };
+
+    node* head;
+    node* cursor;
 
     public:
 

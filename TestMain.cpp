@@ -11,14 +11,33 @@
 using namespace std;
 
 void runtests();
+void test1();
 
 int main()
 {
     {
-        cout << "Running Tests";
+        cout << "Running Tests.\n";
         runtests();
     }
     return 0;
 }
 
-void runtests(){}
+void runtests()
+{
+    test1();
+}
+
+void test1()
+{
+    DLList d;
+    //d.InsertAfter(1);
+    d.InsertAfter(2);
+    d.InsertAfter(3);
+    d.InsertAfter(4);
+    d.InsertAfter(5);
+    d.InsertAfter(6);
+    d.InsertAfter(7);
+    d.Reset();
+    d.InsertBefore(1);
+    d.Display();
+}
