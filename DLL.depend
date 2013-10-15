@@ -1,0 +1,21 @@
+# depslib dependency file v1.0
+1380598216 source:/home/zack/DDL/DDL.cpp
+	<iostream>
+	"DDL.h"
+
+1380588492 /home/zack/DDL/DDL.h
+
+1380598315 source:/home/zack/DDL/TestMain.cpp
+	<iostream>
+	"DDL.h"
+
+1381797741 source:/home/zack/DLL/DLL.cpp
+	<iostream>
+	"DLL.h"
+
+1381798124 /home/zack/DLL/DLL.h
+
+1381797756 source:/home/zack/DLL/TestMain.cpp
+	<iostream>
+	"DLL.h"
+
