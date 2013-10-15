@@ -6,6 +6,7 @@
     October 10, 2013
 
 *****************************************************/
+#include <string>
 #include <iostream>
 #include "DLL.h"
 using namespace std;
@@ -13,7 +14,7 @@ using namespace std;
 void runtests();
 void test1();
 void test2();
-
+void test3();
 int main()
 {
     {
@@ -26,9 +27,22 @@ int main()
 void runtests()
 {
     //test1();
-    test2();
+    //test2();
+    test3();
 }
-void test2()
+
+void test3()
+{
+    DLList s;
+    s.InsertAfter("aasdsad");
+    s.InsertAfter("basdsa");
+    s.Reset();
+    //s.Delete();
+    s.Delete();
+    s.Display();
+}
+
+/* void test2()
 {
     DLList d;
     d.InsertAfter(1);
@@ -38,7 +52,8 @@ void test2()
     d.Retreat();
     d.Delete();
     d.Display();
-    cout<<d.EndOfList();
+    d.Reset();
+    cout<<d.IsEmpty();
     cout << "\nTest Completed." << endl;
 }
 void test1()
@@ -70,3 +85,4 @@ void test1()
     }
     // d.Display();
 }
+*/

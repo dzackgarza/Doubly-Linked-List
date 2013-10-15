@@ -6,6 +6,7 @@
     October 10, 2013
 
 *****************************************************/
+#include <string>
 #include <iostream>
 #include "DLL.h"
 
@@ -13,41 +14,52 @@ using namespace std;
 // Main Functions//
 
 // Post: an empty DLList is created
-DLList::DLList ( void )
-    { head = NULL; cursor = NULL; }
+DLList::DLList ( void ) : head(NULL), cursor(NULL) {}
 
 // Post: A DLList is destroyed.
 DLList::~DLList ( void )
-    { }
+{
+    Reset();
+    while(cursor != NULL) Delete();
+}
 
 // Post: RETVAL1 == The list is empty
-bool DLList::IsEmpty ( void ) const
-    { return (head == NULL && cursor == NULL); }
+bool DLList::IsEmpty ( void ) const { return (!head && !cursor ); }
 
 // Post: RETVAL == Current is after last item in the list or
 //      before the first item in the list
 bool DLList::EndOfList ( void ) const
-    { return (cursor == NULL); }
+{
+    return (cursor == NULL);
+}
 
 // Pre: !IsEmpty()
 // Post: The cursor is moved to the first item in the list
 void DLList::Reset ( void )
-    { cursor = head; }
+{
+    cursor = head;
+}
 
 // Pre: !IsEmpty() && !EndOfList()
 // Post: the cursor is moved to the next item in the list
 void DLList::Advance ( void )
-    { if ( !IsEmpty() && !EndOfList() ) cursor = cursor->next; }
+{
+    if (!IsEmpty() && !EndOfList()) cursor = cursor->next;
+}
 
 // Pre: !IsEmpty() && !EndOfList()
 // Post: the cursor is moved to the previous item
 void DLList::Retreat ( void )
-    { if ( !IsEmpty() && !EndOfList() ) cursor = cursor->previous; }
+{
+    if (!IsEmpty() && !EndOfList()) cursor = cursor->previous;
+}
 
 // Pre: !IsEmpty() && !EndOfList()
 // Post: RETVAL == Item at the cursor
 ItemType DLList::CurrentItem( void )
-    { if ( !IsEmpty() && !EndOfList() ) return cursor->data; else return -1;}
+{
+    if (!IsEmpty() && !EndOfList()) return cursor->data;
+}
 
 // Pre: !IsEmpty()&& !EndOfList()
 // Post: Item at the cursor is deleted && the cursor points to the
@@ -55,12 +67,15 @@ ItemType DLList::CurrentItem( void )
 //      deleted was the last item in the list
 void DLList::Delete( void )
 {
-    if ( IsEmpty() || EndOfList() ) return;
+    if (IsEmpty() || EndOfList()) return;
 
     node* temp = cursor->next;
-    if ( cursor == head )           head = cursor->next;
-    if ( cursor->next != NULL )     cursor->next->previous = cursor->previous;
-    if ( cursor->previous != NULL ) cursor->previous->next = cursor->next;
+    if (cursor == head)
+        head = cursor->next;
+    if (cursor->next != NULL)
+        cursor->next->previous = cursor->previous;
+    if (cursor->previous != NULL)
+        cursor->previous->next = cursor->next;
     delete cursor;
     cursor = temp;
 }
@@ -71,20 +86,13 @@ void DLList::Delete( void )
 //      item in the list. Otherwise, Inserted is the predecessor of
 //      the item that was current when the function was called.
 //      Inserted is the new current item.
-void DLList::InsertBefore ( /*in*/ const ItemType& Inserted )
+void DLList::InsertBefore ( /*in*/ const ItemType& Inserted)
 {
-    node* n = new node;
-    n->data = Inserted;
+    node* n = new node(Inserted);
 
-    if ( IsEmpty() )
+    if (IsEmpty()) head = n;
+    else if (EndOfList())
     {
-        n->previous = NULL;
-        n->next = NULL;
-        head = n;
-    }
-    else if ( EndOfList() )
-    {
-        n->previous = NULL;
         n->next = head;
         head->previous = n;
         head = n;
@@ -108,21 +116,14 @@ void DLList::InsertBefore ( /*in*/ const ItemType& Inserted )
 //      is the new current item.
 void DLList::InsertAfter ( /*in*/ const ItemType& Inserted )
 {
-    node* n = new node;
-    n->data = Inserted;
+    node* n = new node(Inserted);
 
-    if ( IsEmpty() )
-    {
-        n->previous = NULL;
-        n->next = NULL;
-        head = n;
-    }
-    else if ( EndOfList() )
+    if (IsEmpty()) head = n;
+    else if (EndOfList())
     {
         Reset();
         while (cursor->next != NULL) Advance();
         n->previous = cursor;
-        n->next = NULL;
         cursor->next = n;
     }
     else

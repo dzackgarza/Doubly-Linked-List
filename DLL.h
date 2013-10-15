@@ -9,9 +9,10 @@
 #ifndef MY_STRING_CLASS_H
 #define MY_STRING_CLASS_H
 
-#define ItemType int
-// Class Invariants: //
+#include <string>
+#define ItemType std::string
 
+// Class Invariants: //
 
 class DLList {
 
@@ -19,7 +20,13 @@ class DLList {
     {
         node* previous;
         node* next;
-        int data;
+        ItemType data;
+
+        // Explicit node constructor - manually set pointers
+        node(ItemType init, node* prev, node* nex) : data(init), previous(prev), next(nex) {}
+        // Implicit node constructor - pass in value
+        node(ItemType init) : data(init), previous(NULL), next(NULL) {}
+
     };
 
     node* head;
@@ -86,4 +93,5 @@ void InsertAfter ( /*in*/ const ItemType& Inserted );
 void Display ( void );
 
 };
+
 #endif
