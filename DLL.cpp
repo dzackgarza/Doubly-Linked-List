@@ -6,65 +6,35 @@
     October 10, 2013
 
 *****************************************************/
+
 #include <string>
 #include <iostream>
 #include "DLL.h"
-
 using namespace std;
-// Main Functions//
 
-// Post: an empty DLList is created
+// Short Functions //
 DLList::DLList ( void ) : head(NULL), cursor(NULL) {}
 
-// Post: A DLList is destroyed.
 DLList::~DLList ( void )
 {
     Reset();
     while(cursor != NULL) Delete();
 }
 
-// Post: RETVAL1 == The list is empty
 bool DLList::IsEmpty ( void ) const { return (!head && !cursor ); }
 
-// Post: RETVAL == Current is after last item in the list or
-//      before the first item in the list
-bool DLList::EndOfList ( void ) const
-{
-    return (cursor == NULL);
-}
+bool DLList::EndOfList ( void ) const { return (cursor == NULL); }
 
-// Pre: !IsEmpty()
-// Post: The cursor is moved to the first item in the list
-void DLList::Reset ( void )
-{
-    cursor = head;
-}
+void DLList::Reset ( void ) { if (!IsEmpty()) cursor = head; }
 
-// Pre: !IsEmpty() && !EndOfList()
-// Post: the cursor is moved to the next item in the list
-void DLList::Advance ( void )
-{
-    if (!IsEmpty() && !EndOfList()) cursor = cursor->next;
-}
+void DLList::Advance ( void ) { if (!IsEmpty() && !EndOfList()) cursor = cursor->next; }
 
-// Pre: !IsEmpty() && !EndOfList()
-// Post: the cursor is moved to the previous item
-void DLList::Retreat ( void )
-{
-    if (!IsEmpty() && !EndOfList()) cursor = cursor->previous;
-}
+void DLList::Retreat ( void ) { if (!IsEmpty() && !EndOfList()) cursor = cursor->previous; }
 
-// Pre: !IsEmpty() && !EndOfList()
-// Post: RETVAL == Item at the cursor
-ItemType DLList::CurrentItem( void )
-{
-    if (!IsEmpty() && !EndOfList()) return cursor->data;
-}
+ItemType DLList::CurrentItem( void ) { if (!IsEmpty() && !EndOfList()) return cursor->data; }
 
-// Pre: !IsEmpty()&& !EndOfList()
-// Post: Item at the cursor is deleted && the cursor points to the
-//      successor of deleted item or IsEmpty() is true if the item
-//      deleted was the last item in the list
+
+// Long Functions //
 void DLList::Delete( void )
 {
     if (IsEmpty() || EndOfList()) return;
@@ -80,13 +50,7 @@ void DLList::Delete( void )
     cursor = temp;
 }
 
-// Pre: None
-// Post: If the list was empty then Inserted is the only item in
-//      the list. If EndOfList was true then Inserted is the new first
-//      item in the list. Otherwise, Inserted is the predecessor of
-//      the item that was current when the function was called.
-//      Inserted is the new current item.
-void DLList::InsertBefore ( /*in*/ const ItemType& Inserted)
+void DLList::InsertBefore ( const ItemType& Inserted )
 {
     node* n = new node(Inserted);
 
@@ -108,13 +72,7 @@ void DLList::InsertBefore ( /*in*/ const ItemType& Inserted)
     cursor = n;
 }
 
-// Pre: None
-// Post: If the list was empty then Inserted is the only item in
-//      the list. If EndOfList was true then Inserted is the new last
-//      item in the list. Otherwise, Inserted is the successor of the
-//      item that was current when the function was called. Inserted
-//      is the new current item.
-void DLList::InsertAfter ( /*in*/ const ItemType& Inserted )
+void DLList::InsertAfter ( const ItemType& Inserted )
 {
     node* n = new node(Inserted);
 
@@ -136,8 +94,6 @@ void DLList::InsertAfter ( /*in*/ const ItemType& Inserted )
     cursor = n;
 }
 
-// Post: List is displayed to standard out. This is used for
-//      debugging only.
 void DLList::Display ( void )
 {
     node* temp_cursor = cursor;
